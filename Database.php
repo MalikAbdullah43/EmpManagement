@@ -44,10 +44,11 @@ class Database{
         self::close_connection($conn);
         return $data;
     }
-    function searchEmployee($Id,$Name){
+     function searchEmployee($Name,$CNIC){
         $conn = self::build_connection();
         $N = "'$Name'";
-        $q = "select * from employee where EmployeeId = $Id and Name = $N";
+        $C = "'$CNIC'";
+        $q = "select * from employee where CNIC = $C and Name = $N";
         $result = $conn->query($q);
         $row = $result->fetch_assoc();
         self::close_connection($conn);
