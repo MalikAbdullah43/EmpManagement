@@ -13,10 +13,7 @@ $database= new Database();
 
 $data=json_decode(file_get_contents("php://input"),true);
 
-// $Name=$data['name'];
-// $Phone=$data['phone'];
 $Address=$data['address'];
-// $Department=$data['department'];
 $Gender=$data['gender'];
 
 if($validate->name_validate($data['name'])==true)
