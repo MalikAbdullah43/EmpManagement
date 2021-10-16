@@ -14,8 +14,13 @@
   else{
     die("Name is not valid");
   }
-  $Id = $data['EmployeeId'];
+  if ($validate->cnic_validate($data['CNIC']) == true){
+    $CNIC = $data['CNIC'];
+  }
+  else{
+    die("CNIC is not valid");
+  }
 
-  $Employee = $db->searchEmployee($Id,$Name);
+  $Employee = $db->searchEmployee($Name,$CNIC);
   echo json_encode($Employee);
 ?>
