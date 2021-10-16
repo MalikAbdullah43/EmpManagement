@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 16, 2021 at 10:43 AM
+-- Generation Time: Oct 16, 2021 at 05:03 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.11
 
@@ -20,8 +20,7 @@ SET time_zone = "+00:00";
 --
 -- Database: `emp`
 --
-	create database emp;
-	use emp;
+
 -- --------------------------------------------------------
 
 --
@@ -44,10 +43,7 @@ CREATE TABLE `employee` (
 --
 
 INSERT INTO `employee` (`EmployeeId`, `Name`, `Phone`, `Address`, `Deparment`, `Gender`, `CNIC`, `Email`) VALUES
-(1, 'Ali', '2147483647', 'lahroe', 'bio', 'male', '3452234455', ''),
-(2, 'Ali', '2147483647', 'lahroe', 'bio', 'male', '3452234455', 'malik@jlaf'),
-(3, 'Ali', '2147483647', 'lahroe', 'bio', 'male', '3452234455', 'malik@jlaf'),
-(4, 'Ali', '2147483647', 'lahore', 'male', 'bio', '2345432345', 'malik@aldjksf');
+(1, 'Ali', '2147483647', 'lahroe', 'bio', 'male', '3452234455', '');
 
 -- --------------------------------------------------------
 
@@ -89,13 +85,15 @@ INSERT INTO `user` (`UserId`, `Name`, `Phone`, `Address`, `Gender`, `Email`, `CN
 -- Indexes for table `employee`
 --
 ALTER TABLE `employee`
-  ADD PRIMARY KEY (`EmployeeId`);
+  ADD PRIMARY KEY (`EmployeeId`),
+  ADD UNIQUE KEY `CNIC_unique` (`CNIC`,`Email`);
 
 --
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`UserId`);
+  ADD PRIMARY KEY (`UserId`),
+  ADD UNIQUE KEY `CNIC_unique` (`CNIC`,`Email`);
 
 --
 -- AUTO_INCREMENT for dumped tables
