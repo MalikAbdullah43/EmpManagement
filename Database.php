@@ -38,6 +38,9 @@ class Database{
         if ($result->num_rows > 0){
             $data = $result->fetch_all(MYSQLI_ASSOC);
         }
+        else{
+            return "There is no Record in Database";
+        }
         self::close_connection($conn);
         return $data;
     }
