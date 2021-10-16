@@ -1,9 +1,7 @@
 <?php
     class Validate      //Create validation class to check all the input in correct methord :
     {
-
-        public function email_validate($email)      //email_validate function get one parmeter and check email pattern if pattern match return true else false
-                                                    
+        public function email_validate($email)      //email_validate function get one parmeter and check email pattern if pattern match return true else false                                 
         {
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 return false; 
