@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 16, 2021 at 07:01 AM
+-- Generation Time: Oct 16, 2021 at 10:43 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.11
 
@@ -20,8 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `emp`
 --
-create database emp;
-use emp;
+	create database emp;
+	use emp;
 -- --------------------------------------------------------
 
 --
@@ -31,11 +31,11 @@ use emp;
 CREATE TABLE `employee` (
   `EmployeeId` int(11) NOT NULL,
   `Name` varchar(255) DEFAULT NULL,
-  `Phone` int(13) DEFAULT NULL,
+  `Phone` varchar(25) DEFAULT NULL,
   `Address` varchar(255) DEFAULT NULL,
   `Deparment` varchar(255) DEFAULT NULL,
   `Gender` varchar(255) DEFAULT NULL,
-  `CNIC` varchar(255) DEFAULT NULL,
+  `CNIC` varchar(255) NOT NULL,
   `Email` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -44,10 +44,10 @@ CREATE TABLE `employee` (
 --
 
 INSERT INTO `employee` (`EmployeeId`, `Name`, `Phone`, `Address`, `Deparment`, `Gender`, `CNIC`, `Email`) VALUES
-(1, 'Ali', 2147483647, 'lahroe', 'bio', 'male', '3452234455', ''),
-(2, 'Ali', 2147483647, 'lahroe', 'bio', 'male', '3452234455', 'malik@jlaf'),
-(3, 'Ali', 2147483647, 'lahroe', 'bio', 'male', '3452234455', 'malik@jlaf'),
-(4, 'Ali', 2147483647, 'lahore', 'male', 'bio', '2345432345', 'malik@aldjksf');
+(1, 'Ali', '2147483647', 'lahroe', 'bio', 'male', '3452234455', ''),
+(2, 'Ali', '2147483647', 'lahroe', 'bio', 'male', '3452234455', 'malik@jlaf'),
+(3, 'Ali', '2147483647', 'lahroe', 'bio', 'male', '3452234455', 'malik@jlaf'),
+(4, 'Ali', '2147483647', 'lahore', 'male', 'bio', '2345432345', 'malik@aldjksf');
 
 -- --------------------------------------------------------
 
@@ -58,11 +58,11 @@ INSERT INTO `employee` (`EmployeeId`, `Name`, `Phone`, `Address`, `Deparment`, `
 CREATE TABLE `user` (
   `UserId` int(11) NOT NULL,
   `Name` varchar(255) DEFAULT NULL,
-  `Phone` int(13) DEFAULT NULL,
+  `Phone` varchar(13) DEFAULT NULL,
   `Address` varchar(255) DEFAULT NULL,
   `Gender` varchar(255) DEFAULT NULL,
   `Email` varchar(255) DEFAULT NULL,
-  `CNIC` varchar(255) DEFAULT NULL,
+  `CNIC` varchar(255) NOT NULL,
   `UserPassword` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -71,15 +71,15 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`UserId`, `Name`, `Phone`, `Address`, `Gender`, `Email`, `CNIC`, `UserPassword`) VALUES
-(1, 'Ali', 2147483647, 'lahore', 'male', NULL, NULL, ''),
-(2, 'usama', 2147483647, 'lahore', 'male', NULL, NULL, ''),
-(3, 'Umar', 2147483647, 'multan', 'male', NULL, NULL, ''),
-(4, 'Uzair', 2147483647, 'lahore', 'male', NULL, NULL, ''),
-(5, 'umar', 2147483647, 'islamabad', 'male', NULL, NULL, ''),
-(6, 'umar', 2147483647, 'islamabad', 'male', NULL, NULL, ''),
-(7, 'umar', 2147483647, 'islamabad', 'male', NULL, NULL, ''),
-(8, 'umar', 2147483647, 'islamabad', 'male', NULL, NULL, ''),
-(9, 'Ali', 2147483647, 'lahore', 'male', 'malik@aldjksf', '2345432345', '');
+(1, 'Ali', '2147483647', 'lahore', 'male', NULL, '', ''),
+(2, 'usama', '2147483647', 'lahore', 'male', NULL, '', ''),
+(3, 'Umar', '2147483647', 'multan', 'male', NULL, '', ''),
+(4, 'Uzair', '2147483647', 'lahore', 'male', NULL, '', ''),
+(5, 'umar', '2147483647', 'islamabad', 'male', NULL, '', ''),
+(6, 'umar', '2147483647', 'islamabad', 'male', NULL, '', ''),
+(7, 'umar', '2147483647', 'islamabad', 'male', NULL, '', ''),
+(8, 'umar', '2147483647', 'islamabad', 'male', NULL, '', ''),
+(9, 'Ali', '2147483647', 'lahore', 'male', 'malik@aldjksf', '2345432345', '');
 
 --
 -- Indexes for dumped tables
