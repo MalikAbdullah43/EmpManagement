@@ -15,7 +15,7 @@
         public function password_validate($password)        //password_validate function get one parmeter and check password pattern if pattern match return true else false
         {
             $password_pattern='/^(?=.*[A-Z]).{8,20}$/';     //password length > 8 and also 1 uppercase charecter
-            if(!preg_match($password_pattern, $password)){  //chech patteren match
+            if(!preg_match($password_pattern, $password)){  //check patteren match
                 return false;
             }
             else{
@@ -25,7 +25,7 @@
         public function phone_Validate($phone)      //password_validate function get one parmeter and check password pattern if pattern match return true else false
         {
             $phone_pattern = "/^(03)+([0-4]{1})+([0-9]{1})[-]([0-9]{7})$/";     //number of total length 11 start 03 and next to digit between 00-49 next 7 digit 0-9
-            if(!preg_match($phone_pattern, $phone)){    //chech patteren match
+            if(!preg_match($phone_pattern, $phone)){    //check patteren match
                 return false;
             }
             else{
@@ -35,7 +35,7 @@
         public function name_validate($name)        //password_validate function get one parmeter and check password pattern if pattern match return true else false
         {
             $name_pattern="/^[a-zA-Z ]*$/";     //Not Accept Special character and digit
-            if(!preg_match($name_pattern, $name)){      //chech patteren match
+            if(!preg_match($name_pattern, $name)){      //check patteren match
                 return false;
             }
             else{
@@ -45,7 +45,7 @@
         public function cnic_validate($cnic)        //password_validate function get one parmeter and check password pattern if pattern match return true else false
         {
             $cnic_pattern="/^([0-9]{5})[-]([0-9]{7})[-]([0-9]{1})$/"; //length of CNIC is 13 and first - after 5 digit second - after 7 digit 
-            if(!preg_match($cnic_pattern, $cnic)){      //chech patteren match
+            if(!preg_match($cnic_pattern, $cnic)){      //check patteren match
                 return false;
             }
             else{
@@ -55,7 +55,7 @@
         public function dep_validate($department)       //password_validate function get one parmeter and check password pattern if pattern match return true else false
         {
             $department_pattern="/^[a-zA-Z]*+[0-9]*$/";  //enter only number and also alphabet and number not start number and end alphabet
-            if(!preg_match($department_pattern, $dep)){     //chech patteren match
+            if(!preg_match($department_pattern, $dep)){     //check patteren match
                 echo "invalid";
                 return false;
             }
