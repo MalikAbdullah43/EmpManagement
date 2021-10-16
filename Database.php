@@ -2,8 +2,8 @@
 
 class Database{
 
-    private function build_connection(){
-        $conn = new mysqli("localhost","root","","emp");
+    public function build_connection(){
+        $conn = new mysqli("localhost:8111","root","","emp");
         if ($conn->connect_error){
             echo "Database Connection Error";
             die;
@@ -13,7 +13,7 @@ class Database{
         }
         
     }
-    private function close_connection($conn){
+    public function close_connection($conn){
         $conn->close();
     }
     function insert($tableName,$perameter){
@@ -44,11 +44,10 @@ class Database{
         self::close_connection($conn);
         return $data;
     }
-     function searchEmployee($Name,$CNIC){
+    function searchEmployee($Id,$Name){
         $conn = self::build_connection();
         $N = "'$Name'";
-        $C = "'$CNIC'";
-        $q = "select * from employee where CNIC = $C and Name = $N";
+        $q = "select * from employee where EmployeeId = $Id and Name = $N";
         $result = $conn->query($q);
         $row = $result->fetch_assoc();
         self::close_connection($conn);
