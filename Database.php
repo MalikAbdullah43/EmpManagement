@@ -6,6 +6,7 @@ class Database{
         $conn = new mysqli("localhost","root","","emp");
         if ($conn->connect_error){
             echo "Database Connection Error";
+            die;
         }
         else{
             return $conn;
@@ -16,9 +17,8 @@ class Database{
         $conn->close();
     }
     function insert($tableName,$perameter){
-        //$perameter = "'$Name'".','.$Phone.','."'$Address'".','."'$Gender'".','."'$CNIC'".','."'$Email'";
         if ($tableName == "user"){
-            $innerPera = "Name,Phone,Address,Gender,CNIC,Email";
+            $innerPera = "Name,Phone,Address,Gender,CNIC,Email,UserPassword";
         }else{
             $innerPera = "Name,Phone,Address,Deparment,Gender,CNIC,Email";
         }
@@ -29,19 +29,15 @@ class Database{
         $conn->query($q);
         self::close_connection($conn);
     }
-    // function insertEmployee($Name,$Phone,$Address,$Deparment,$Gender,$CNIC,$Email){
-    //     $perameter = "'$Name'".','.$Phone.','."'$Address'".','."'$Deparment'".','."'$Gender'".','."'$CNIC'".','."'$Email'";
-    //     $conn = self::buildConnection();
-    //     $q = "insert into employee(Name,Phone,Address,Deparment,Gender,CNIC,Email) values($perameter)";
-    //     $conn->query($q);
-    //     self::closeConnection($conn);
-    // }
+
     function Fetch_list($tableName)
     {
         $conn = self::build_connection();
         $q = "select * from ".$tableName;
         $result = $conn->query($q);
-        $data = $result->fetch_all(MYSQL_ASSOC);
+        if ($result->num_rows > 0){
+            $data = $result->fetch_all(MYSQLI_ASSOC);
+        }
         self::close_connection($conn);
         return $data;
     }
@@ -56,9 +52,4 @@ class Database{
     }
    
 }
-
-// $db = new Database();
-// $pera = array("Ali","04351234567","lahore","male","bio","2345432345","malik@aldjksf");
-// $db->insert("employee",$pera);
-
 ?>
