@@ -22,7 +22,7 @@
                 return true;
             } 
         }
-        public function phone_Validate($phone)      //password_validate function get one parmeter and check password pattern if pattern match return true else false
+        public function phone_validate($phone)      //password_validate function get one parmeter and check password pattern if pattern match return true else false
         {
             $phone_pattern = "/^(03)+([0-4]{1})+([0-9]{1})[-]([0-9]{7})$/";     //number of total length 11 start 03 and next to digit between 00-49 next 7 digit 0-9
             if(!preg_match($phone_pattern, $phone)){    //check patteren match
