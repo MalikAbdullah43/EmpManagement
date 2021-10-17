@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `emp`
+-- 
 --
 
 -- --------------------------------------------------------
@@ -63,7 +63,8 @@ CREATE TABLE `user` (
   `otp` varchar(11) DEFAULT NULL,
   `status` varchar(11) DEFAULT NULL,
   `CNIC` varchar(255) DEFAULT NULL,
-  `UserPassword` varchar(255) NOT NULL
+  `UserPassword` varchar(255) NOT NULL,
+  `create_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
