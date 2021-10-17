@@ -59,10 +59,11 @@ class User
     }
 }
 $data = json_decode(file_get_contents("php://input"), true);//decode input request parameters and store them in an array.
-if($_SERVER["REQUEST_METHOD"] != "POST")//Check if request method is not $_POST send error message
+if($_SERVER["REQUEST_METHOD"] != "POST")//Check if request method is not $_POST send error message and terminate program
 {
-    echo"404 page not found";
-    return false;
+    $message_display=array("Status_code"=>404,"Message"=>'Page not found');//status code 404 because request method is wrong
+    print_r(json_encode($message_display));
+    exit();
 }
 $user_password= $data["userpassword"];
 $email= $data["email"];
