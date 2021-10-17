@@ -45,6 +45,10 @@ class User
             print_r(json_encode($message_display));
             return false;
         } 
+        else
+        {
+            return true;
+        }
     }
     function login()//Login function
     {
@@ -70,20 +74,20 @@ $usersystem->email= isset($_POST['email']) ? $_POST['email']:die();
 $check=$usersystem->validation();
 if($check==false)
 {
-exit();
+ exit();
+}
+if($check==true)
+{
+  $flag = $usersystem->login();//Calling login function
+}
+if($flag->rowcount()>0)
+{
+   $row = $flag->fetch(PDO::FETCH_ASSOC);
+   $message_display=array(200,"Successfully Login!");//if password and email are matched display this message
 }
 else
- {
-  $flag = $usersystem->login();//Calling login function
-  if($flag->rowcount()>0)
-   {
-     $row = $flag->fetch(PDO::FETCH_ASSOC);
-     $message_display=array(200,"Successfully Login!");//if password and email are matched display this message
-   }
- else
-  {
-    $message_display=array(422,"Invalid Email or password");//if password and email are wrong display error message
-  }
+{
+   $message_display=array(422,"Invalid Email or password");//if password and email are wrong display error message
 }
 print_r(json_encode($message_display));
 ?>
