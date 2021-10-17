@@ -36,21 +36,19 @@ public function send_pass()
     $res = $conn->query($sql);
     if($res->num_rows > 0){
     $email = $_session['email'];
+    ///mail function 
     $to_email = "{$email}";
     $subject = "simple email test via php";
     $body = "hi,this is your log-in password";
     $headers = "from: malikabdullah3011@gmail.com";
     
     if (mail($to_email, $subject, $body, $headers)) {
-        $msg = array("status"=>"200","message"=>"otp send on '{$to_email}'");
+        $msg = array("status"=>"200","message"=>"Password Send to email");
         echo json_encode($msg);
         self::save_otp_in_db($otp,$remail);
     } else {
         $msg = array("status"=>"500","message"=>"internal server error");
     }}
-    else{
-        
-    }
 }
 
 
