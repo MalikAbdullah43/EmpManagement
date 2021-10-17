@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 16, 2021 at 10:43 AM
--- Server version: 10.4.21-MariaDB
--- PHP Version: 8.0.11
+-- Generation Time: Oct 17, 2021 at 12:16 PM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.4.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -20,8 +21,7 @@ SET time_zone = "+00:00";
 --
 -- Database: `emp`
 --
-	create database emp;
-	use emp;
+
 -- --------------------------------------------------------
 
 --
@@ -31,11 +31,11 @@ SET time_zone = "+00:00";
 CREATE TABLE `employee` (
   `EmployeeId` int(11) NOT NULL,
   `Name` varchar(255) DEFAULT NULL,
-  `Phone` varchar(25) DEFAULT NULL,
+  `Phone` int(13) DEFAULT NULL,
   `Address` varchar(255) DEFAULT NULL,
   `Deparment` varchar(255) DEFAULT NULL,
   `Gender` varchar(255) DEFAULT NULL,
-  `CNIC` varchar(255) NOT NULL,
+  `CNIC` varchar(255) DEFAULT NULL,
   `Email` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -44,10 +44,10 @@ CREATE TABLE `employee` (
 --
 
 INSERT INTO `employee` (`EmployeeId`, `Name`, `Phone`, `Address`, `Deparment`, `Gender`, `CNIC`, `Email`) VALUES
-(1, 'Ali', '2147483647', 'lahroe', 'bio', 'male', '3452234455', ''),
-(2, 'Ali', '2147483647', 'lahroe', 'bio', 'male', '3452234455', 'malik@jlaf'),
-(3, 'Ali', '2147483647', 'lahroe', 'bio', 'male', '3452234455', 'malik@jlaf'),
-(4, 'Ali', '2147483647', 'lahore', 'male', 'bio', '2345432345', 'malik@aldjksf');
+(1, 'Ali', 2147483647, 'lahroe', 'bio', 'male', '3452234455', ''),
+(2, 'Ali', 2147483647, 'lahroe', 'bio', 'male', '3452234455', 'malik@jlaf'),
+(3, 'Ali', 2147483647, 'lahroe', 'bio', 'male', '3452234455', 'malik@jlaf'),
+(4, 'Ali', 2147483647, 'lahore', 'male', 'bio', '2345432345', 'malik@aldjksf');
 
 -- --------------------------------------------------------
 
@@ -58,14 +58,13 @@ INSERT INTO `employee` (`EmployeeId`, `Name`, `Phone`, `Address`, `Deparment`, `
 CREATE TABLE `user` (
   `UserId` int(11) NOT NULL,
   `Name` varchar(255) DEFAULT NULL,
-  `Phone` varchar(13) DEFAULT NULL,
+  `Phone` bigint(13) DEFAULT NULL,
   `Address` varchar(255) DEFAULT NULL,
   `Gender` varchar(255) DEFAULT NULL,
   `Email` varchar(255) DEFAULT NULL,
-  `otp` int(11),
-  `status` int(1,
-  `create_at` timestamps(), 
-  `CNIC` varchar(255) NOT NULL,
+  `otp` varchar(11) DEFAULT NULL,
+  `status` varchar(11) DEFAULT NULL,
+  `CNIC` varchar(255) DEFAULT NULL,
   `UserPassword` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -73,16 +72,9 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`UserId`, `Name`, `Phone`, `Address`, `Gender`, `Email`, `CNIC`, `UserPassword`) VALUES
-(1, 'Ali', '2147483647', 'lahore', 'male', NULL, '', ''),
-(2, 'usama', '2147483647', 'lahore', 'male', NULL, '', ''),
-(3, 'Umar', '2147483647', 'multan', 'male', NULL, '', ''),
-(4, 'Uzair', '2147483647', 'lahore', 'male', NULL, '', ''),
-(5, 'umar', '2147483647', 'islamabad', 'male', NULL, '', ''),
-(6, 'umar', '2147483647', 'islamabad', 'male', NULL, '', ''),
-(7, 'umar', '2147483647', 'islamabad', 'male', NULL, '', ''),
-(8, 'umar', '2147483647', 'islamabad', 'male', NULL, '', ''),
-(9, 'Ali', '2147483647', 'lahore', 'male', 'malik@aldjksf', '2345432345', '');
+INSERT INTO `user` (`UserId`, `Name`, `Phone`, `Address`, `Gender`, `Email`, `otp`, `status`, `CNIC`, `UserPassword`) VALUES
+(10, 'Muhammad Usama', 3084957932, 'DHA PAHSE 8 , LAHORE', 'MALE', 'm.usamayounas669@gmail.com', '', '', '38104-4343221-1', 'C12345678'),
+(11, 'Waqas', 3023456754, 'Ravi Road', 'MALE', 'waqas@gamil.com', '', '', '38104-4343221-1', 'C0987654321');
 
 --
 -- Indexes for dumped tables
@@ -114,7 +106,7 @@ ALTER TABLE `employee`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `UserId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `UserId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
