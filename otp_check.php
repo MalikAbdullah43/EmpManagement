@@ -31,7 +31,10 @@ public function check_otp($otp)
 public function send_pass()
 {
     $conn = self::build_connection();
-
+    global $otp;
+    $sql = "select UserPassword from user where otp={$otp}";
+    $res = $conn->query($sql);
+    if($res->num_rows > 0){
     $email = $_session['email'];
     $to_email = "{$email}";
     $subject = "simple email test via php";
@@ -44,6 +47,9 @@ public function send_pass()
         self::save_otp_in_db($otp,$remail);
     } else {
         $msg = array("status"=>"500","message"=>"internal server error");
+    }}
+    else{
+        
     }
 }
 
