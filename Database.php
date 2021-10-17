@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 
 class Database{
 
-    private function build_connection(){     //build sql database connection 
+    public function build_connection(){     //build sql database connection 
         $conn = new mysqli("localhost","root","","emp");
         if ($conn->connect_error){
             echo "Database Connection Error";
@@ -16,7 +16,7 @@ class Database{
         }
         
     }
-    private function close_connection($conn){   //close database connection
+    public function close_connection($conn){   //close database connection
         $conn->close();
     }
 
