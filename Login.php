@@ -26,7 +26,7 @@ class Database{ //Class Database
 class User
 {
     public $email;
-    public $userpassword;
+    public $user_password;
     private $conn;
     private $tb_name="user";
     public function __construct($db)
@@ -35,13 +35,13 @@ class User
     }
     function validation()//check validation if userpassword pattern and email pattern is correct
     {
-        if(strlen($this->userpassword) < 8){
-            $message_display=array(422,'Your password must be at least 8 characters!');
+        if(strlen($this->user_password) < 8){
+            $message_display=array("Status_code"=>422,"Message"=>'Your password must be at least 8 characters!');//status code 422 because user enter less than 8 characters
             print_r(json_encode($message_display));
             return false;
         }
         if(!filter_var($this->email, FILTER_VALIDATE_EMAIL)){
-            $message_display=array(422,'Invalid Email pattern');
+            $message_display=array("Status_code"=>422,"Message"=>'Invalid Email pattern');//status code 422 because user enter invalid email
             print_r(json_encode($message_display));
             return false;
         } 
@@ -52,7 +52,7 @@ class User
     }
     function login()//Login function
     {
-        $query = "SELECT * FROM ".$this->tb_name." WHERE Userpassword= '".$this->userpassword."'AND Email='".$this->email."'";//sql query to check Password and email is present in databse 
+        $query = "SELECT * FROM ".$this->tb_name." WHERE Userpassword= '".$this->user_password."'AND Email='".$this->email."'";//sql query to check Password and email is present in databse 
         $flag = $this->conn->prepare($query);
         $flag->execute();
         return $flag;
@@ -64,30 +64,30 @@ if($_SERVER["REQUEST_METHOD"] != "POST")//Check if request method is not $_POST 
     echo"404 page not found";
     return false;
 }
-$userpassword= $data["userpassword"];
+$user_password= $data["userpassword"];
 $email= $data["email"];
-$database = new Database();
+$database = new Database(); //Creating Object of class Database
 $db = $database ->db_connection();
-$usersystem = new User($db);
-$usersystem->userpassword=isset($_POST['userpassword'])? $_POST['userpassword'] : die();
-$usersystem->email= isset($_POST['email']) ? $_POST['email']:die();
-$check=$usersystem->validation();
-if($check==false)
+$system_user = new User($db);//Creating Object of class User
+$system_user->user_password=isset($_POST['userpassword'])? $_POST['userpassword'] : die();
+$system_user->email= isset($_POST['email']) ? $_POST['email']:die();
+$check=$system_user->validation();
+if($check==false)//if function validation return false terminate program
 {
  exit();
 }
-if($check==true)
+if($check==true)//if function validation return true call login function
 {
-  $flag = $usersystem->login();//Calling login function
+  $flag = $system_user->login();//Calling login function
 }
-if($flag->rowcount()>0)
+if($flag->rowcount()>0)//if row count in the database is greater than zero 
 {
-   $row = $flag->fetch(PDO::FETCH_ASSOC);
-   $message_display=array(200,"Successfully Login!");//if password and email are matched display this message
+   $get_data = $flag->fetch(PDO::FETCH_ASSOC);
+   $message_display=array("Status_code"=>200,"Message"=>"Successfully Login!","User_Id"=>$get_data['UserId'],"Name"=>$get_data['Name']);//if password and email are matched display this message
 }
 else
 {
-   $message_display=array(422,"Invalid Email or password");//if password and email are wrong display error message
+   $message_display=array("Status_code"=>422,"Message"=>"Invalid Email or password");//if password and email are wrong display error message
 }
 print_r(json_encode($message_display));
 ?>
