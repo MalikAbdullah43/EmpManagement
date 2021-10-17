@@ -1,53 +1,56 @@
 <?php
-session_start();
-require 'Database.php';
-date_default_timezone_set("Asia/Karachi");
-class otpCheck extends Database
+session_start();   //For getting Variables of api_forget.php Page
+require 'Database.php';   //This line include Database connectivity file
+date_default_timezone_set("Asia/Karachi"); //for local time
+
+
+
+class otpCheck extends Database  //class database inherit in otpCheck
 {
 
-public function check_otp($otp)
+public function check_otp($otp,$email)
 {
-    $email = $_session['email'];
+     $email = $_SESSION['email'];
+
     $conn = self::build_connection();
-     
-    $res = $conn->query("select  otp from user where email = '{$email}' and status != 1 and now() <=date_add(create_at,interval 15 minute)");
+     if(!empty($otp))
+     {
+    $res = $conn->query("select  otp from user where email = '{$email}' and status != 1 and otp='{$otp}' and now() <=date_add(create_at,interval 15 minute)");
+
     if($res->num_rows>0)
     { 
-        if($res === $otp)
-        self::send_pass();
-        else{
-        $msg = array("status"=>"401","message"=>"otp not match");
-        echo json_encode($msg);}
+        self::send_pass($email);
     }
     else{
-        $msg = array("status"=>"$otp","message"=>"otp may be expire");
+        $msg = array("status"=>"410","message"=>"otp may be expire");
         echo json_encode($msg);
-    }
+    }}
     
 
 
 }
 
-public function send_pass()
+public function send_pass($email)
 {
     $conn = self::build_connection();
     global $otp;
     $sql = "select UserPassword from user where otp={$otp}";
     $res = $conn->query($sql);
     if($res->num_rows > 0){
-    $email = $_session['email'];
     ///mail function 
-    $to_email = "{$email}";
-    $subject = "simple email test via php";
-    $body = "hi,this is your log-in password";
-    $headers = "from: malikabdullah3011@gmail.com";
+    $to_email = $email;
+
     
-    if (mail($to_email, $subject, $body, $headers)) {
-        $msg = array("status"=>"200","message"=>"Password Send to email");
+
+    
+    if (mail($to_email, "For Reset Password", "hi,this is your log-in password:'{$otp}'", "from: malikabdullah3011@gmail.com")) {
+        $msg = array("status"=>"200","message"=>"Password Send to email '{$to_email}'");
         echo json_encode($msg);
-        self::save_otp_in_db($otp,$remail);
+        $res = $conn->query("UPDATE user SET status = 1 where email='{$to_email}'");
+        Session_destroy();
+        
     } else {
-        $msg = array("status"=>"500","message"=>"internal server error");
+        $msg = array("status"=>"500","message"=>"Internal Server Error");
     }}
 }
 
@@ -57,8 +60,14 @@ public function send_pass()
 }
 $data = json_decode(file_get_contents('php://input'),true);
 $otp  = $data['u_otp'];  
+$email =$_SESSION['email'];
+
+
+
+
 $otp_ch = new otpCheck();
-$otp_ch->check_otp($otp);
+$otp_ch->check_otp($otp,$email);
+
 
 
 
