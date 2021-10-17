@@ -8,59 +8,40 @@ date_default_timezone_set("Asia/Karachi"); //for local time
 class otpCheck extends Database  //class database inherit in otpCheck
 {
 
-public function check_otp($otp,$email)
+public function check_otp($otp,$email)   //two parameters accepting 
 {
-     $email = $_SESSION['email'];
 
-    $conn = self::build_connection();
-     if(!empty($otp))
-     {
-    $res = $conn->query("select  otp from user where email = '{$email}' and status != 1 and otp='{$otp}' and now() <=date_add(create_at,interval 15 minute)");
+    $conn = self::build_connection();   //connectivity with database
+     if(!empty($otp))                   //if variable is empty
+    {
+         //query for changes in database
+         $res = $conn->query("select  otp from user where email = '{$email}' and status != 1 and otp='{$otp}' and now() <=date_add(create_at,interval 15 minute)");
+         $count = $res->num_rows;
 
-    if($res->num_rows>0)
-    { 
-        self::send_pass($email);
-    }
-    else{
-        $msg = array("status"=>"410","message"=>"otp may be expire");
-        echo json_encode($msg);
-    }}
-    
+         if($count>0)
+         { 
+            // self::send_pass($email);  //if query recieve data from database then call this function
 
-
-}
-
-public function send_pass($email)
-{
-    $conn = self::build_connection();
-    global $otp;
-    $sql = "select UserPassword from user where otp={$otp}";
-    $res = $conn->query($sql);
-    if($res->num_rows > 0){
-    ///mail function 
-    $to_email = $email;
-
-    
-
-    
-    if (mail($to_email, "For Reset Password", "hi,this is your log-in password:'{$otp}'", "from: malikabdullah3011@gmail.com")) {
-        $msg = array("status"=>"200","message"=>"Password Send to email '{$to_email}'");
-        echo json_encode($msg);
-        $res = $conn->query("UPDATE user SET status = 1 where email='{$to_email}'");
-        Session_destroy();
+             $msg = array("status"=>"200","message"=>"All Okay Kindly Save Password");  //message for okay call
+             echo json_encode($msg);
+             $_SESSION['status'] = 0;
         
-    } else {
-        $msg = array("status"=>"500","message"=>"Internal Server Error");
-    }}
+         }
+      else  {
+             $msg = array("status"=>"410","message"=>"otp may be expire");  //message in array
+             echo json_encode($msg);                                        //conversion array to json format
+            }
+    }
+    
+
+
 }
 
 
-
-
 }
-$data = json_decode(file_get_contents('php://input'),true);
+$data = json_decode(file_get_contents('php://input'),true);  //fetching data from postman
 $otp  = $data['u_otp'];  
-$email =$_SESSION['email'];
+$email =$_SESSION['email'];   //getting value from session
 
 
 
