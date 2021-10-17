@@ -1,5 +1,5 @@
 <?php
-session_start();
+session_start();   //start session
 header('Content-Type:application/json');   //Here we set header as json Format
 include 'Database.php';
 
@@ -12,7 +12,7 @@ include 'Database.php';
         $res = $conn->query($sql);
        if( $semail == "")
        {
-           $msg = array("status"=>"204","message"=>"no content send");
+           $msg = array("status"=>"204","message"=>"no content recieve");
            echo json_encode($msg);
        }
        elseif($res->num_rows > 0)
@@ -32,7 +32,7 @@ include 'Database.php';
    
      public function send_email($remail)   //here we genrate otp and send to user email
     {
-        $otp = rand(100000,999999);
+        $otp = rand(100000,999999);        // Random number and set as otp 
         
         $to_email = "malikabdullah4300@gmail.com";
         $subject = "simple email test via php";
@@ -52,7 +52,7 @@ include 'Database.php';
      public function save_otp_in_db($otp,$email)    //here we set otp in database
     {
         
-         $sql = "update user set otp='{$otp}' where email='{$email}'"; 
+         $sql = "update user set otp='{$otp}' , status = 0 where email='{$email}'"; 
          $conn = self::build_connection();
          $res = $conn->query($sql) or exit("sql query failed");
 
@@ -61,12 +61,14 @@ include 'Database.php';
  }
 
 
-
-$data = json_decode(file_get_contents('php://input'),true);
+//Data get from user through Postmen
+$data  = json_decode(file_get_contents('php://input'),true);
 $email = $data['u_email'];
-$pass = new forgetPassword();
-$pass->check_email($email);
 $_SESSION['email'] = $email;
+//Object and Function Call
+$pass  = new forgetPassword();
+$pass->check_email($email);
+
 
 
 ?>
