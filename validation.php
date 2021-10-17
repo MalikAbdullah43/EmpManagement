@@ -71,7 +71,7 @@
         public function dep_validate($department)
         {
             $department_pattern="/^[a-zA-Z]*+[0-9]*$/";  //enter only number and also alphabet and number not start number and end alphabet
-            if(!preg_match($department_pattern, $dep)){     //check patteren match
+            if(!preg_match($department_pattern, $department)){     //check patteren match
                 echo "invalid";
                 return false;
             }
