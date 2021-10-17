@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 17, 2021 at 03:08 PM
+-- Generation Time: Oct 17, 2021 at 03:53 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.11
 
@@ -20,8 +20,7 @@ SET time_zone = "+00:00";
 --
 -- Database: `emp`
 --
-  create database emp;
-  use emp;
+
 -- --------------------------------------------------------
 
 --
@@ -31,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `employee` (
   `EmployeeId` int(11) NOT NULL,
   `Name` varchar(255) DEFAULT NULL,
-  `Phone` int(13) DEFAULT NULL,
+  `Phone` varchar(23) DEFAULT NULL,
   `Address` varchar(255) DEFAULT NULL,
   `Deparment` varchar(255) DEFAULT NULL,
   `Gender` varchar(255) DEFAULT NULL,
@@ -44,9 +43,9 @@ CREATE TABLE `employee` (
 --
 
 INSERT INTO `employee` (`EmployeeId`, `Name`, `Phone`, `Address`, `Deparment`, `Gender`, `CNIC`, `Email`) VALUES
-(2, 'Ali', 2147483647, 'lahroe', 'bio', 'male', '3452234455', 'malik@jlaf'),
-(4, 'Ali', 2147483647, 'lahore', 'male', 'bio', '2345432345', 'malik@aldjksf'),
-(5, 'Ahmad', 2147483647, 'lahore', 'Bio', 'male', '12345-1234567-1', 'malik@gamil.com');
+(2, 'Ali', '2147483647', 'lahroe', 'bio', 'male', '3452234455', 'malik@jlaf'),
+(4, 'Ali', '2147483647', 'lahore', 'male', 'bio', '2345432345', 'malik@aldjksf'),
+(5, 'Ahmad', '2147483647', 'lahore', 'Bio', 'male', '12345-1234567-1', 'malik@gamil.com');
 
 -- --------------------------------------------------------
 
