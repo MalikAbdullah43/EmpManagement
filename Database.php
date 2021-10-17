@@ -7,7 +7,7 @@ error_reporting(E_ALL);
 class Database{
 
     private function build_connection(){     //build sql database connection 
-        $conn = new mysqli("localhost","root","","emp1");
+        $conn = new mysqli("localhost","root","","emp");
         if ($conn->connect_error){
             echo "Database Connection Error";
         }
@@ -21,11 +21,10 @@ class Database{
     }
 
     /**
-     * Function to insert user in database.
+     * Function to insert user or Employee in database.
      * 
      */
     function insert($tableName,$perameter){
-        //$perameter = "'$Name'".','.$Phone.','."'$Address'".','."'$Gender'".','."'$CNIC'".','."'$Email'";
         if ($tableName == "user"){
             $innerPera = "Name,Phone,Address,Gender,otp,status,CNIC,Email,UserPassword";
         }else{
@@ -38,13 +37,6 @@ class Database{
         $conn->query($q);
         self::close_connection($conn);
     }
-    // function insertEmployee($Name,$Phone,$Address,$Deparment,$Gender,$CNIC,$Email){
-    //     $perameter = "'$Name'".','.$Phone.','."'$Address'".','."'$Deparment'".','."'$Gender'".','."'$CNIC'".','."'$Email'";
-    //     $conn = self::buildConnection();
-    //     $q = "insert into employee(Name,Phone,Address,Deparment,Gender,CNIC,Email) values($perameter)";
-    //     $conn->query($q);
-    //     self::closeConnection($conn);
-    // }
 
     /**
      * This function is used to fetch users from table.
@@ -54,7 +46,7 @@ class Database{
         $conn = self::build_connection();
         $q = "select * from ".$tableName;
         $result = $conn->query($q);
-        $data = $result->fetch_all(MYSQL_ASSOC);
+        $data = $result->fetch_all(MYSQLI_ASSOC);
         self::close_connection($conn);
         return $data;
     }
@@ -68,8 +60,7 @@ class Database{
         $q = "select * from ".$tableName ." WHERE cnic='{$cnic}'";
         $result = $conn->query($q);
         self::close_connection($conn);
-        if($result->num_rows > 0)
-        {
+        if($result->num_rows > 0){
             return true;
         }
         else{
@@ -78,12 +69,13 @@ class Database{
     }
 
     /**
-     * This functioon is used to search employee with specific id and name.
+     * This functioon is used to search employee with specific CNIC and name.
      */
-    function searchEmployee($Id,$Name){
+    function searchEmployee($tableName,$Name,$CNIC){
         $conn = self::build_connection();
         $N = "'$Name'";
-        $q = "select * from employee where EmployeeId = $Id and Name = $N";
+        $C = "'$CNIC'";
+        $q = "select * from $tableName where CNIC = $C and Name = $N";
         $result = $conn->query($q);
         $row = $result->fetch_assoc();
         self::close_connection($conn);
@@ -91,9 +83,5 @@ class Database{
     }
    
 }
-
-// $db = new Database();
-// $pera = array("Ali","04351234567","lahore","male","bio","2345432345","malik@aldjksf");
-// $db->insert("employee",$pera);
 
 ?>
