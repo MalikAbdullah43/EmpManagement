@@ -27,7 +27,7 @@ class Database{
     function insert($tableName,$perameter){
         //$perameter = "'$Name'".','.$Phone.','."'$Address'".','."'$Gender'".','."'$CNIC'".','."'$Email'";
         if ($tableName == "user"){
-            $innerPera = "Name,Phone,Address,Gender,CNIC,Email,UserPassword";
+            $innerPera = "Name,Phone,Address,Gender,otp,status,CNIC,Email,UserPassword";
         }else{
             $innerPera = "Name,Phone,Address,Deparment,Gender,CNIC,Email";
         }
