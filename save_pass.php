@@ -16,6 +16,7 @@ class savePassword extends Database
             if($new_pass===$conf_pass){
                 $sql = "update user set status=1,UserPassword='{$new_pass}' where email = '{$email}'";  //sql query for saving code in database which user enter
                 $res = $conn->query($sql);
+                self::close_connection();   //connection close with database
             
                     $msg = array("Status"=>"200","Message"=>"Ok Password Set");  //msg okay
                     echo json_encode($msg);  //print on sreen
@@ -52,7 +53,7 @@ $conf_pass = $data['cpass'];
 $valid_pass = new Validate();            //validate class object for password validation
 $valid_pass->password_validate($new_pass);
 $valid_pass->password_validate($conf_pass);
-echo $new_pass;
+
 
 $obj = new savePassword();  //object of savePassword class for updating password
 $obj->save_password($new_pass,$conf_pass);

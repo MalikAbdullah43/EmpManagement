@@ -14,6 +14,7 @@ include 'Database.php';
        { 
            $msg = array("status"=>"204","message"=>"no content recieve");  //message in array form
            echo json_encode($msg);                                        //conversion in json form and printing on console
+           self::close_connection();
        }
        elseif($res->num_rows > 0)      //if value >0 then call inside functiom
        {
@@ -23,6 +24,7 @@ include 'Database.php';
        { 
             $msg = array("status"=>"404","message"=>"result not found");   //if email not exist then show this
             echo json_encode($msg);
+           
        }
        
        
@@ -55,7 +57,8 @@ include 'Database.php';
          $sql = "update user set otp='{$otp}' , status = 0 where email='{$email}'";   //Status change if 1  and otp setting
          
          $conn = self::build_connection();                                           //connectivity with database
-         $res = $conn->query($sql) or exit("sql query failed");                      //Running Query
+         $res = $conn->query($sql) or exit("sql query failed");                    //Running Query
+         self::close_connection();   //connection close with database
 
     }   
 
