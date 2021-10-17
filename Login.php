@@ -59,11 +59,11 @@ $flag = $usersystem->login();//Calling login fucnction
 if($flag->rowcount()>0)
 {
     $row = $flag->fetch(PDO::FETCH_ASSOC);
-    $message_display=array("status" => true, "message"=>"Successfully Login!");//if password and email are matched display this message
+    $message_display=array("status" => 200, "message"=>"Successfully Login!");//if password and email are matched display this message
 }
 else
 {
-    $message_display=array("status"=>false,"message"=>"422 Invalid Email or password");//if password and email are wrong display error message
+    $message_display=array("status"=> 422,"message"=>"Invalid Email or password");//if password and email are wrong display error message
 }
 print_r(json_encode($message_display));
 ?>
