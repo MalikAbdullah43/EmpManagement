@@ -10,11 +10,12 @@ include 'Database.php';
         $conn= self::build_connection();     //connection building with database
         $sql = "select *from user where email = '{$semail}'";   //check email exist in database or not
         $res = $conn->query($sql);      //sql query running
+        self::close_connection($conn);  //Close database Connection
        if( $semail == "")               //if empty request then show error
        { 
            $msg = array("status"=>"204","message"=>"no content recieve");  //message in array form
            echo json_encode($msg);                                        //conversion in json form and printing on console
-           self::close_connection();
+           
        }
        elseif($res->num_rows > 0)      //if value >0 then call inside functiom
        {
@@ -58,7 +59,7 @@ include 'Database.php';
          
          $conn = self::build_connection();                                           //connectivity with database
          $res = $conn->query($sql) or exit("sql query failed");                    //Running Query
-         self::close_connection();   //connection close with database
+         self::close_connection($conn);   //connection close with database
 
     }   
 
