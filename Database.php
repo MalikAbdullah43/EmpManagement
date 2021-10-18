@@ -80,7 +80,7 @@ class Database{
         if ($result->num_rows > 0){
             $output = $result->fetch_assoc();
         }else{
-            $output = array('Message' => 'No Employee Match :','status'=>false);
+            $output = array('Message' => 'No Employee Match :','status'=>'204');
         }
         self::close_connection($conn);
            return $output;
