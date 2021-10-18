@@ -64,7 +64,7 @@ CREATE TABLE `user` (
   `status` varchar(11) DEFAULT NULL,
   `CNIC` varchar(255) DEFAULT NULL,
   `UserPassword` varchar(255) NOT NULL,
-  `create_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  `create_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
