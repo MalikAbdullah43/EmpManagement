@@ -71,16 +71,20 @@ class Database{
     /**
      * This functioon is used to search employee with specific CNIC and name.
      */
-    function searchEmployee($tableName,$Name,$CNIC){
+        function searchEmployee($tableName,$Name,$CNIC){
         $conn = self::build_connection();
         $N = "'$Name'";
         $C = "'$CNIC'";
         $q = "select * from $tableName where CNIC = $C and Name = $N";
         $result = $conn->query($q);
-        $row = $result->fetch_assoc();
+        if ($result->num_rows > 0){
+            $output = $result->fetch_assoc();
+        }else{
+            $output = array('Message' => 'No Employee Match :','status'=>false);
+        }
         self::close_connection($conn);
-        return $row;
-    }
+           return $output;
+        }
    
 }
 
