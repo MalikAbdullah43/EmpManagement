@@ -11,13 +11,14 @@ class otpCheck extends Database  //class database inherit in otpCheck
 public function check_otp($otp,$email)   //two parameters accepting 
 {
 
-    $conn = self::build_connection();   //connectivity with database
+     //connectivity with database
      if(!empty($otp))                   //if variable is empty
-    {
+    {    
+         $conn = self::build_connection(); 
          //query for changes in database
          $res = $conn->query("select  otp from user where email = '{$email}' and status != 1 and otp='{$otp}' and now() <=date_add(create_at,interval 15 minute)");
          $count = $res->num_rows;
-         self::close_connection();   //connection close with database
+         self::close_connection($conn);   //connection close with database
          if($count>0)
          { 
             // self::send_pass($email);  //if query recieve data from database then call this function
