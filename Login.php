@@ -89,6 +89,7 @@ if($flag->rowcount()>0)//if row count in the database is greater than zero
 else
 {
    $message_display=array("Status_code"=>422,"Message"=>"Invalid Email or password");//if password and email are wrong display error message
+    http_response_code(422); 
 }
 print_r(json_encode($message_display));
 ?>
