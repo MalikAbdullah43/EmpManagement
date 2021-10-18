@@ -43,6 +43,7 @@ class User
         if(!filter_var($this->email, FILTER_VALIDATE_EMAIL)){
             $message_display=array("Status_code"=>422,"Message"=>'Invalid Email pattern');//status code 422 because user enter invalid email
             print_r(json_encode($message_display));
+            http_response_code(422); 
             return false;
         } 
         else
@@ -63,6 +64,7 @@ if($_SERVER["REQUEST_METHOD"] != "POST")//Check if request method is not $_POST 
 {
     $message_display=array("Status_code"=>404,"Message"=>'Page not found');//status code 404 because request method is wrong
     print_r(json_encode($message_display));
+    http_response_code(404); 
     exit();
 }
 $user_password= $data["userpassword"];
@@ -85,6 +87,7 @@ if($flag->rowcount()>0)//if row count in the database is greater than zero
 {
    $get_data = $flag->fetch(PDO::FETCH_ASSOC);
    $message_display=array("Status_code"=>200,"Message"=>"Successfully Login!","User_Id"=>$get_data['UserId'],"Name"=>$get_data['Name']);//if password and email are matched display this message
+    
 }
 else
 {
