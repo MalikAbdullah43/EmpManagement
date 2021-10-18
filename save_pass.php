@@ -10,13 +10,14 @@ class savePassword extends Database
     {
       $status =  $_SESSION['status'];   //status from database 
       $email  =  $_SESSION['email'];   //email for updation
-      $conn = self::build_connection(); //database connection
+     
         if($status===0)
         {
             if($new_pass===$conf_pass){
+                $conn = self::build_connection(); //database connection
                 $sql = "update user set status=1,UserPassword='{$new_pass}' where email = '{$email}'";  //sql query for saving code in database which user enter
                 $res = $conn->query($sql);
-                self::close_connection();   //connection close with database
+                self::close_connection($conn);   //connection close with database
             
                     $msg = array("Status"=>"200","Message"=>"Ok Password Set");  //msg okay
                     echo json_encode($msg);  //print on sreen
