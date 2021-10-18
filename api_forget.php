@@ -10,21 +10,23 @@ include 'Database.php';
         $conn= self::build_connection();     //connection building with database
         $sql = "select *from user where email = '{$semail}'";   //check email exist in database or not
         $res = $conn->query($sql);      //sql query running
-        self::close_connection($conn);  //Close database Connection
+        self::close_connection($conn);
        if( $semail == "")               //if empty request then show error
        { 
-           $msg = array("status"=>"204","message"=>"no content recieve");  //message in array form
-           echo json_encode($msg);                                        //conversion in json form and printing on console
+            
+           http_response_code(204);                                      
            
        }
        elseif($res->num_rows > 0)      //if value >0 then call inside functiom
        {
            self::send_email($semail);
+           
        }
        else
        { 
             $msg = array("status"=>"404","message"=>"result not found");   //if email not exist then show this
             echo json_encode($msg);
+            http_response_code(404); 
            
        }
        
@@ -37,7 +39,7 @@ include 'Database.php';
     {
         $otp = rand(100000,999999);        // Random number and set as otp 
         
-        $to_email = "malikabdullah4300@gmail.com";
+        $to_email = $remail;
         $subject = "simple email test via php";
         $body = "hi,this is your six digit otp(one time pin)-{$otp}";
         $headers = "from: malikabdullah3011@gmail.com";
@@ -48,6 +50,8 @@ include 'Database.php';
             self::save_otp_in_db($otp,$remail);        //call Function saving OTP in DATABASE
         } else {
             $msg = array("status"=>"500","message"=>"internal server error");  //Any Error occur
+            echo json_encode($msg);
+            http_response_code(500); 
         }
     }
 
@@ -58,8 +62,10 @@ include 'Database.php';
          $sql = "update user set otp='{$otp}' , status = 0 where email='{$email}'";   //Status change if 1  and otp setting
          
          $conn = self::build_connection();                                           //connectivity with database
-         $res = $conn->query($sql) or exit("sql query failed");                    //Running Query
-         self::close_connection($conn);   //connection close with database
+         $res = $conn->query($sql) or exit("sql query failed");  
+         self::close_connection($conn); 
+                          //Running Query
+        
 
     }   
 
@@ -73,7 +79,5 @@ $_SESSION['email'] = $email;                                     //Creating Sess
 //Object and Function Call
 $pass  = new forgetPassword();                                   // object initilization of class
 $pass->check_email($email);                                      // call function through object
-
-
 
 ?>

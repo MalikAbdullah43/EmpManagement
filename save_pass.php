@@ -10,11 +10,10 @@ class savePassword extends Database
     {
       $status =  $_SESSION['status'];   //status from database 
       $email  =  $_SESSION['email'];   //email for updation
-     
+      $conn = self::build_connection(); //database connection
         if($status===0)
         {
             if($new_pass===$conf_pass){
-                $conn = self::build_connection(); //database connection
                 $sql = "update user set status=1,UserPassword='{$new_pass}' where email = '{$email}'";  //sql query for saving code in database which user enter
                 $res = $conn->query($sql);
                 self::close_connection($conn);   //connection close with database
@@ -22,18 +21,20 @@ class savePassword extends Database
                     $msg = array("Status"=>"200","Message"=>"Ok Password Set");  //msg okay
                     echo json_encode($msg);  //print on sreen
                     Session_destroy();//destroy all sessions 
-                
+                    
     
             }
             else{ 
                   $msg =array("Status"=>"422","Message"=>"Both Passsword Not Match");  //password not match
                   echo json_encode($msg);  //print message
+                  http_response_code(422); 
             }
           }
         else
         {
             $msg = array("Status"=>"401","Message"=>"Unauthorized Request"); //error message user try to enter unathorized way
             echo json_encode($msg);
+            http_response_code(401); 
         }
     }
 

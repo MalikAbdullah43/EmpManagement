@@ -11,11 +11,11 @@ class otpCheck extends Database  //class database inherit in otpCheck
 public function check_otp($otp,$email)   //two parameters accepting 
 {
 
-     //connectivity with database
+      //connectivity with database
      if(!empty($otp))                   //if variable is empty
-    {    
-         $conn = self::build_connection(); 
+    {
          //query for changes in database
+         $conn = self::build_connection(); 
          $res = $conn->query("select  otp from user where email = '{$email}' and status != 1 and otp='{$otp}' and now() <=date_add(create_at,interval 15 minute)");
          $count = $res->num_rows;
          self::close_connection($conn);   //connection close with database
@@ -25,13 +25,16 @@ public function check_otp($otp,$email)   //two parameters accepting
 
              $msg = array("status"=>"200","message"=>"All Okay Kindly Save Password");  //message for okay call
              echo json_encode($msg);
+             
+             http_response_code(200); 
              $_SESSION['status'] = 0;
              
         
          }
       else  {
              $msg = array("status"=>"410","message"=>"otp may be expire");  //message in array
-             echo json_encode($msg);                                        //conversion array to json format
+             echo json_encode($msg);
+             http_response_code(410);                                         //conversion array to json format
              
             }
     }
@@ -45,9 +48,6 @@ public function check_otp($otp,$email)   //two parameters accepting
 $data = json_decode(file_get_contents('php://input'),true);  //fetching data from postman
 $otp  = $data['u_otp'];  
 $email =$_SESSION['email'];   //getting value from session
-
-
-
 
 $otp_ch = new otpCheck();
 $otp_ch->check_otp($otp,$email);
