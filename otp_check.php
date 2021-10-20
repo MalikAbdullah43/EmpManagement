@@ -16,7 +16,7 @@ public function check_otp($otp,$email)   //two parameters accepting
     {
          //query for changes in database
          $conn = self::build_connection(); 
-         $res = $conn->query("select  otp from user where email = '{$email}' and status != 1 and otp='{$otp}' and now() <=date_add(create_at,interval 15 minute)");
+         $res = $conn->query("select  otp from user where email = '{$email}' and status != 1 and otp='{$otp}' and now() <=date_add(create_at,interval 2 minute)");
          $count = $res->num_rows;
          self::close_connection($conn);   //connection close with database
          if($count>0)
